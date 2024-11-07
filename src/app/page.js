@@ -1,95 +1,88 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import React, { useState } from 'react';
+import './globals.css'
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [pokemonName, setPokemonName] = useState('ditto')
+  const [chosen, setChosen] = useState(false)
+  const [pokemonData, setPokemonData] = useState({
+    name: "",
+    species: "",
+    img: "",
+    hp: "",
+    attack: "",
+    defense: "",
+    type: "",
+    description: ""
+  })
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  const searchPokemon = () => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
+      .then((response) => response.json())
+      .then((response) => {
+        const pokemonId = response.id;
+        const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
+  
+        fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonName.toLowerCase()}`)
+          .then((speciesResponse) => speciesResponse.json())
+          .then((speciesData) => {
+
+            const englishEntry = speciesData.flavor_text_entries.find(
+              (entry) => entry.language.name === "en"
+            );
+
+            const cleanedDescription = englishEntry
+            ? englishEntry.flavor_text.replace(/[\n\f]/g, " ")
+            : "No description available.";
+  
+            setPokemonData({
+              name: pokemonName,
+              species: response.species.name,
+              img: spriteUrl,
+              hp: response.stats[0].base_stat,
+              attack: response.stats[1].base_stat,
+              defense: response.stats[3].base_stat,
+              type: response.types[0].type.name,
+              description: cleanedDescription
+            });
+            setChosen(true);
+          });
+      });
+  };
+  
+  
+
+  return (
+    <div className='app'>
+      <h1>Pokemon Finder</h1>
+      <div className='search-bar-container'>
+        <input input="text" onChange={(e) => {setPokemonName(e.target.value)}} placeholder='Choose a pokemon'/>
+        <button onClick={searchPokemon}>search</button>
+      </div>
+
+      <div className='result-container'>
+        {!chosen ? (
+          <div></div>
+        ) : (
+          <div className='pokemon-card'>
+            <div className='card-title'>
+              <h2>{pokemonData.name}</h2>
+              <p>HP: {pokemonData.hp}</p>
+            </div>
+            <div className='pokemon-bg'>
+              <img src={pokemonData.img} width='280' alt={`${pokemonData.name} sprite`} />
+            </div>
+            <p className="pokemon-description">{pokemonData.description}</p>
+            <div className='stats'>
+              <p>Type: {pokemonData.type}</p>
+              <p>ATK: {pokemonData.attack}</p>
+              <p>DEF: {pokemonData.defense}</p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
-  );
+  )
 }
+
+

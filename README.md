@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokémon Search Web App
+
+![Pokémon Search App](./public/cover-img.png)
+
+### Description
+This is a simple Pokémon search web application built with React that utilizes the [PokéAPI](https://pokeapi.co/) to fetch data on Pokémon. Users can search for any Pokémon by name, and the app will display a card with relevant information, including the Pokémon's image, stats, and a brief description.
+
+---
+
+## Features
+- **Search Bar**: Allows users to enter a Pokémon name or ID.
+- **Pokémon Card**: Displays Pokémon details including an image, type, basic stats (like HP, Attack, Defense), and a short description.
+- **Real-time Data Fetching**: Powered by the PokéAPI, the app retrieves live data to display up-to-date Pokémon information.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+Make sure you have the following installed:
+- [Node.js](https://nodejs.org/) (v12+ recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/adcoding/pokemon-finder.git
+    cd pokemon-finder
+    ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+2. **Install Dependencies**:
+    ```bash
+    npm install
+    ```
+    or if you prefer yarn:
+    ```bash
+    yarn install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Run the App Locally**:
+    ```bash
+    npm start
+    ```
+    or
+    ```bash
+    yarn start
+    ```
+   After the app builds, it will be available at `http://localhost:3000`.
 
-## Learn More
+### Usage
+1. Enter a Pokémon name in the search bar.
+2. The app will display a card with the Pokémon's details.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies Used
+- **React**: UI framework
+- **PokéAPI**: Public API for Pokémon data
+- **CSS/Styled Components**: For styling
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Contributing
+Feel free to fork this repository and make improvements. Pull requests are always welcome!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Acknowledgements
+- Data provided by [PokéAPI](https://pokeapi.co/)
+- Inspired by the Pokémon universe.
+
